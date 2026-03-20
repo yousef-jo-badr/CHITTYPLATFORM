@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Always Chat | Official</title>
+    <style>
+        /* --- ROBLOX WHITE VIBE --- */
+        :root {
+            --rbx-blue: #00A2FF;
+            --rbx-green: #00B06F;
+            --rbx-bg: #FFFFFF;
+            --card-gray: #F2F4F5;
+            --text: #393B3D;
+            
+            /* Rank Colors */
+            --color-owner: #FF4747;
+            --color-exec: #FF8C00;
+            --color-lead: #D4AF37;
+            --color-dev: #00A2FF;
+            --color-head-admin: #9B59B6;
+            --color-admin: #E67E22;
+            --color-mod: #2ECC71;
+            --color-vip: #F1C40F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "HCo Gotham SSm", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--rbx-bg);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #emoji-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 24px;
+            animation: fall linear forwards;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            border-bottom: 2px solid #eee;
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 800;
+            font-size: 1rem;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        nav a:hover { color: var(--rbx-blue); transform: scale(1.1); }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 120px; 
+            z-index: 10;
+            position: relative;
+            width: 100%;
+        }
+
+        .hero-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            transition: 0.5s;
+        }
+
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 100px 10%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            font-weight: 900;
+            color: var(--rbx-blue);
+        }
+
+        .about-box {
+            background: var(--card-gray);
+            padding: 50px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            line-height: 1.4;
+            border: 2px solid #eee;
+            transition: 0.3s;
+        }
+        .about-box:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        /* --- DEV GRID --- */
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .dev-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid #eee;
+            transition: 0.3s;
+        }
+        
+        .dev-card h3 { margin-bottom: 5px; font-size: 1.2rem; }
+        .dev-card p { font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .dev-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        /* --- CAREER STEPS --- */
+        .career-step {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            text-align: left;
+            transition: 0.3s;
+        }
+        .career-step:hover { background: var(--card-gray); transform: translateX(10px); }
+        
+        .step-num {
+            background: var(--rbx-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+
+        .play-section {
+            padding: 150px 20px;
+            background: var(--rbx-blue);
+            color: white;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .play-btn {
+            background: white;
+            color: var(--rbx-blue);
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 2rem;
+            text-decoration: none;
+            font-weight: 900;
+            display: inline-block;
+            margin-top: 30px;
+            transition: 0.3s;
+        }
+        .play-btn:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+    </style>
+</head>
+<body>
+
+    <div id="emoji-container"></div>
+
+    <nav>
+        <a href="#home">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="devs.html">DEVS</a>
+        <a href="career.html">CAREER</a>
+        <a href="#play">PLAY</a>
+    </nav>
+
+   <header class="hero" id="home">
+        <img src="chat.png" alt="Always Chat Logo" class="hero-img">
+    </header>
+
+    <section id="about" >
+        <h2 class="section-title">The Vibe</h2>
+        <div class="about-box">
+            Always Chat is simply a chat game where people can chat after Roblox banned the chat! 💬
+            It’s a space to <strong>make friends</strong>, hangout, and enjoy the true social experience 
+            the way it used to be. ✨
+        </div>
+    </section>
+
+     <section id="devs">
+        <h2 class="section-title">Development & Staff</h2>
+        <div class="dev-grid">
+            <div class="dev-card" style="border-color: var(--color-owner);">
+                <h3>Unknown</h3>
+                <p style="color: var(--color-owner);">[-Owner-]</p>
+                <p style="color: var(--color-owner);">the creator of the game</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-lead);">
+                <h3>queso</h3>
+                <p style="color: var(--color-lead);">-Lead Developer-</p>
+                 <p style="color: var(--color-lead);">the bridge to the ultimate game</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-lead);">
+                <h3>3AATROX</h3>
+                <p style="color: var(--color-lead);">-Lead Developer-</p>
+                <p style="color: var(--color-lead);">the bridge to the ultimate game</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-exec);">
+                <h3>saud</h3>
+                <p style="color: var(--color-exec);">-Executive Manager-</p>
+                <p style="color: var(--color-exec);">the bridge to the ultimate game</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>Unknown_Security</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the designing and creativity</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>duck</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the thinker of the updates</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>MULTIBLOX_Dev</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the builder of the features</p>
+            </div>
+             <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>MULTIBLOX_Dev</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the builder of the features</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>helloiamcoolboy</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the innovator of the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-dev);">
+                <h3>Elmo</h3>
+                <p style="color: var(--color-dev);">-Developer-</p>
+                <p style="color: var(--color-dev);">the maker of the updates</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-head-admin);">
+                <h3>cream</h3>
+                <p style="color: var(--color-head-admin);">-Head Admin-</p>
+                <p style="color: var(--color-head-admin);">the leader of the staff</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-head-admin);">
+                <h3>creaminbeetweens</h3>
+                <p style="color: var(--color-head-admin);">-Head Admin-</p>
+                <p style="color: var(--color-head-admin);">the leader of the staff</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-admin);">
+                <h3>Universe123Plays</h3>
+                <p style="color: var(--color-admin);">-Admin-</p>
+                <p style="color: var(--color-admin);">the guardian of the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-admin);">
+                <h3>Unknown_Chef</h3>
+                <p style="color: var(--color-admin);">-Admin-/p>
+                <p style="color: var(--color-admin);">the guardian of the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-admin);">
+                <h3>Unknown_Potato</h3>
+                <p style="color: var(--color-admin);">-Admin-</p>
+                <p style="color: var(--color-admin);">the guardian of the community</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-mod);">
+                <h3>revi</h3>
+                <p style="color: var(--color-mod);">-Moderator-</p>
+                <p style="color: var(--color-mod);">the protector of the community</p>
+            </div>
+             <div class="dev-card" style="border-color: var(--color-mod);">
+                <h3>jon</h3>
+                <p style="color: var(--color-mod);">-Moderator-</p>
+                <p style="color: var(--color-mod);">the protector of the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-mod);">
+                <h3>Idk293</h3>
+                <p style="color: var(--color-mod);">-Moderator-</p>
+                <p style="color: var(--color-mod);">the protector of the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-mod);">
+                <h3>braxx001</h3>
+                <p style="color: var(--color-mod);">-Moderator-</p>
+                <p style="color: var(--color-mod);">the protector of the community</p>
+            </div>
+
+            <div class="dev-card" style="border-color: var(--color-vip);">
+                <h3>H3NO</h3>
+                <p style="color: var(--color-vip);">-VIP-</p>
+                <p style="color: var(--color-vip);">the special members in the community</p>
+            </div>
+            <div class="dev-card" style="border-color: var(--color-vip);">
+                <h3>Am123hegq</h3>
+                <p style="color: var(--color-vip);">-VIP-</p>
+                <p style="color: var(--color-vip);">the special members in the community</p>
+            </div>
+        </div>
+        <div class="dev-card" style="border-color: var(--color-vip);">
+                <h3>nescarlet</h3>
+                <p style="color: var(--color-vip);">-Artist-</p>
+                <p style="color: var(--color-vip);">the creative drawings behind the visuals</p>
+            </div>
+        </div>
+        <div class="dev-card" style="border-color: var(--color-mod);">
+                <h3>CLAW_MASTER</h3>
+                <p style="color: var(--color-mod);">-biggest fan-</p>
+                <p style="color: var(--color-mod);">the most dedicated supporter of the community</p>
+            </div>
+    </section>
+
+    <section id="career">
+        <h2 class="section-title">The Career Path</h2>
+        <div class="career-step">
+            <div class="step-num">1</div>
+            <div>
+                <h3>Starting with Dreams</h3>
+                <p>Every great social empire begins with a single message. We started with the dream of bringing back open communication to every Robloxian.</p>
+            </div>
+        </div>
+        <div class="career-step">
+            <div class="step-num">2</div>
+            <div>
+                <h3>Collab Plan</h3>
+                <p>Growth is better together! Our strategy involves a major collaboration with <strong>Chatbox</strong>.</p>
+            </div>
+        </div>
+        <div class="career-step">
+            <div class="step-num">3</div>
+            <div>
+                <h3>The Collab</h3>
+                <p>Mission accomplished! They did the collab, merging the best of Always Chat and Chatbox.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="play" class="play-section">
+        <h1 style="font-size: 4rem;">What are you waiting for?</h1>
+        <p style="font-size: 1.5rem;">The conversation is happening right now.</p>
+        <a href="#" class="play-btn">PLAY THE GAME NOW :)</a>
+    </section>
+
+    <script>
+        const container = document.getElementById('emoji-container');
+        const emojis = ['💬', '✨', '🔥', '😎', '☁️', '🎉', '🌟'];
+        function createEmoji() {
+            const emoji = document.createElement('div');
+            emoji.classList.add('emoji');
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.animationDuration = Math.random() * 3 + 2 + 's';
+            container.appendChild(emoji);
+            setTimeout(() => { emoji.remove(); }, 5000);
+        }
+        setInterval(createEmoji, 300);
+    </script>
+</body>
+</html>
